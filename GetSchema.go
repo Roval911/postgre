@@ -48,6 +48,7 @@ func main() {
 		fmt.Println("Query", err)
 		return
 	}
+	//aaaa
 
 	for rows.Next() {
 		var name string
