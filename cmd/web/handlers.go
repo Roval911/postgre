@@ -51,6 +51,14 @@ func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
 		app.clientError(w, http.StatusMethodNotAllowed)
 		return
 	}
+	title := "История про улитку"
+	content := "Улитка выползла из раковины,\nвытянула рожки,\nи опять подобрала их."
+	id, err := app.snippets.Insert(title, content)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
 
-	w.Write([]byte("Создание новой заметки..."))
+	// Перенаправляем пользователя на соответствующую страницу заметки.
+	http.Redirect(w, r, fmt.Sprintf("/snippet?id=%d", id), http.StatusSeeOther)
 }
